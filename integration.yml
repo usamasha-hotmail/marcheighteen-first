@@ -1,0 +1,29 @@
+pool:
+  vmImages: ubuntu-latest
+stages:
+- stage: ci
+  displayName: 'Continious integration'
+  jobs:
+  - job: build
+    displayName: Build project assets
+    container: mcr.microsdt.com/dotnet/sdk:6.0
+    steps:  
+    - script: |
+        dotnet pubish \
+        --configuration Release \
+        --output out --self-contained \
+        --runtime win-x64 \
+        -p:PublishSingleFile=true
+        displayName: Publish executable
+    - script: |
+        dotnet pack \
+        --output pkg  \
+        -p:Version=1.0.0
+      displayName: Package for NuGet
+    - publish: out/Contoso.Spaces.Console.exe
+      displayName: Create executable build artifact
+      artifact: console-exe
+    - publish: pkg/Contoso.Spaces.Console.1.0.0.nupkg
+      displayName: Create package build artifact
+      artifact: nuget-package
+
