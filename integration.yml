@@ -1,5 +1,6 @@
 pool:
   vmImages: ubuntu-latest
+  
 stages:
 - stage: ci
   displayName: 'Continious integration'
