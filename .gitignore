@@ -1,0 +1,7 @@
+/.vs
+/pkg
+/out
+/bin
+/obj
+/Properties
+*.user
